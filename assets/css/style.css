@@ -1,0 +1,10 @@
+.jumbotron {
+    width: 100vw;
+    height: 12.5vh;
+    background-color: blue;
+    background-image: linear-gradient(90deg, rgb(0, 166, 255), darkblue);
+}
+
+.forecast-card {
+    background-color: darkblue;
+}
