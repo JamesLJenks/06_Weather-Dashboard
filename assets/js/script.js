@@ -33,10 +33,10 @@ function searchWeather(searchInput) {
     // }
 
 
-    var city = $("<h4>").text(apiResponse.name + " (" + new Date().toLocaleDateString() + ")")
-    var weatherCard = $("<div>").addClass("weather-card") // use this to style card (Flexbox)
-    var temperature = $("<div>").addClass("feature-weather-stats").text("Temp: " + apiResponse.main.temp + "\u00B0F")
-    var humidity = $("<div>").addClass("feature-weather-stats").text("Humidity: " + apiResponse.main.humidity + "%")
+    var city = $("<h4>").text(apiResponse.name + " (" + new Date().toLocaleDateString() + ")");
+    var weatherCard = $("<div>").addClass("today-weather-card"); // use this to style card (Flexbox)
+    var temperature = $("<div>").addClass("today-weather-stats").text("Temp: " + apiResponse.main.temp + "\u00B0F");
+    var humidity = $("<div>").addClass("today-weather-stats").text("Humidity: " + apiResponse.main.humidity + "%");
 
     
     $("#today-weather").append(city, temperature, humidity)
@@ -54,9 +54,9 @@ function searchForecast(searchInput) {
     
     for (var i=0; i<data.list.length; i++) {
         if (data.list[i].dt_txt.indexOf("09:00:00") !== -1) {
-            var cardCity = $("<h5>").text(data.city.name + " (" + new Date (data.list[i].dt_txt))
-            var forecastTemp = $("<p>").text(data.list[i].main.temp + "\u00B0F")
-            var forecastHumidity = $("<p>").text(data.list[i].main.humidity + "%")
+            var cardCity = $("<h5>").text(data.city.name + " | " + new Date (data.list[i].dt_txt));
+            var forecastTemp = $("<p>").text(data.list[i].main.temp + "\u00B0F");
+            var forecastHumidity = $("<p>").text(data.list[i].main.humidity + "%");
 
 
 
