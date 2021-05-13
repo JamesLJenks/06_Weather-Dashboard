@@ -21,7 +21,7 @@ $("#search-button").on("click", function(event) {
 
 function searchWeather(searchInput) {
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=8a0b187f58134a2e51bff5ae31b7377e&units=imperial",
+        url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchInput + "&appid=8a0b187f58134a2e51bff5ae31b7377e&units=imperial",
         method: "GET"
     }).then(function (apiResponse) {
         console.log("todayForecastData", apiResponse);
@@ -47,7 +47,7 @@ function searchWeather(searchInput) {
 
 function searchForecast(searchInput) {
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchInput + "&appid=8a0b187f58134a2e51bff5ae31b7377e&units=imperial",
+        url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchInput + "&appid=8a0b187f58134a2e51bff5ae31b7377e&units=imperial",
         method: "GET"
     }).then(function (data) {
         console.log("forecastData", data);
@@ -76,3 +76,4 @@ function searchForecast(searchInput) {
 
 // var history = JSON.parse(window.localStorage.getItem("history")) || [];
 
+// UV Index API: https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
