@@ -28,11 +28,11 @@ function searchWeather(searchInput) {
 
     $("#today-weather").empty();
     
-    // if (history) {
-    //    window.localStorage.setItem("history", JSON.stringify(history));
-    //    history.push(searchInput)
-    //    makeRow (searchInput)
-    // }
+    if (searchHistory) {
+        searchHistory.push(searchInput);
+        window.localStorage.setItem("search-history", JSON.stringify(searchHistory));
+        makeListItem(searchInput)
+    }
 
 
     var city = $("<h4>").text(apiResponse.name + " (" + new Date().toLocaleDateString() + ")");
@@ -77,8 +77,6 @@ function searchForecast(searchInput) {
     })
 }
 
-// var latitude = todayForecastData.coord.lat;
-// var longitude = todayForecastData.coord.lon;
 
 function searchUvIndex(latitude, longitude) {
     $.ajax({
@@ -93,7 +91,7 @@ function searchUvIndex(latitude, longitude) {
 
         if (uvResponse.current.uvi <= 3) {
             uvStatus.addClass("safe");
-        }else if (uvResponse.current.uvi < 7 && uvResponse.current.uvi > 3) {
+        } else if (uvResponse.current.uvi < 7 && uvResponse.current.uvi > 3) {
             uvStatus.addClass("questionable");
         } else {
             uvStatus.addClass("dangerous");
@@ -102,10 +100,14 @@ function searchUvIndex(latitude, longitude) {
         $("#today-weather").append(uvStatus.append(uvCard));
     });
 }   
-// UV is it's own ajax call that takes in latitude and longitude
+
+
+var searchHistory = JSON.parse(window.localStorage.getItem("search-history")) || [];
+
+function makeListItem (city) {
+    var listItem = $("<li>").text(city);
+    $(".search-history").append(listItem);
+}
 // Add local storage based on search --> put in
 // Create buttons using function that says to create row with buttons containing searched city names (think <ul> with list items in it)
 
-// var history = JSON.parse(window.localStorage.getItem("history")) || [];
-
-// UV Index API: https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
