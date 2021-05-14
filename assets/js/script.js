@@ -26,6 +26,8 @@ function searchWeather(searchInput) {
     }).then(function (apiResponse) {
         console.log("todayForecastData", apiResponse);
 
+    $("#today-weather").empty();
+    
     // if (history) {
     //    window.localStorage.setItem("history", JSON.stringify(history));
     //    history.push(searchInput)
@@ -42,6 +44,9 @@ function searchWeather(searchInput) {
     $("#today-weather").append(city, temperature, humidity)
 
     searchForecast (searchInput);
+
+    searchUvIndex(apiResponse.coord.lat, apiResponse.coord.lon)
+
     })
 }
 
@@ -52,6 +57,8 @@ function searchForecast(searchInput) {
     }).then(function (data) {
         console.log("forecastData", data);
     
+    $("#forecast").empty();
+
     for (var i=0; i<data.list.length; i++) {
         if (data.list[i].dt_txt.indexOf("09:00:00") !== -1) {
             var cardCity = $("<h5>").text(data.city.name + " | " + new Date (data.list[i].dt_txt));
@@ -70,6 +77,31 @@ function searchForecast(searchInput) {
     })
 }
 
+// var latitude = todayForecastData.coord.lat;
+// var longitude = todayForecastData.coord.lon;
+
+function searchUvIndex(latitude, longitude) {
+    $.ajax({
+        url: 'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&exclude=hourly,daily&appid=8a0b187f58134a2e51bff5ae31b7377e&units=imperial',
+        method: "GET"
+    }).then(function (uvResponse) {
+        console.log("todayUvIndex", uvResponse);
+    
+        var uvCard = $("<h5>").text("UV Index: ");
+
+        var uvStatus = $("<div>").addClass("btn btn-md").text(uvResponse.current.uvi)
+
+        if (uvResponse.current.uvi <= 3) {
+            uvStatus.addClass("safe");
+        }else if (uvResponse.current.uvi < 7 && uvResponse.current.uvi > 3) {
+            uvStatus.addClass("questionable");
+        } else {
+            uvStatus.addClass("dangerous");
+        }
+
+        $("#today-weather").append(uvStatus.append(uvCard));
+    });
+}   
 // UV is it's own ajax call that takes in latitude and longitude
 // Add local storage based on search --> put in
 // Create buttons using function that says to create row with buttons containing searched city names (think <ul> with list items in it)
