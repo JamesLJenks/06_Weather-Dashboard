@@ -30,8 +30,8 @@ function searchWeather(searchInput) {
     
     if (searchHistory) {
         searchHistory.push(searchInput);
-        window.localStorage.setItem("search-history", JSON.stringify(searchHistory));
-        makeListItem(searchInput)
+        window.localStorage.setItem("searchhistory", JSON.stringify(searchHistory));
+        makeListItem(searchInput);   
     }
 
 
@@ -102,12 +102,17 @@ function searchUvIndex(latitude, longitude) {
 }   
 
 
-var searchHistory = JSON.parse(window.localStorage.getItem("search-history")) || [];
+var searchHistory = JSON.parse(window.localStorage.getItem("searchhistory")) || [];
 
 function makeListItem (city) {
     var listItem = $("<li>").text(city);
     $(".search-history").append(listItem);
 }
-// Add local storage based on search --> put in
-// Create buttons using function that says to create row with buttons containing searched city names (think <ul> with list items in it)
 
+$(".search-history").on("click", "li", function() {
+    searchWeather($(this).text())
+})
+
+for (var i=0; i<searchHistory.length; i++) {
+    makeListItem(searchHistory[i]);
+}
